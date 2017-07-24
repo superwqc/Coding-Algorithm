@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/OJ.iml" filepath="$PROJECT_DIR$/OJ.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../OJ/codingInterviews/codingInterviews.iml" filepath="$PROJECT_DIR$/../OJ/codingInterviews/codingInterviews.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../OJ/leetcode/leetcode.iml" filepath="$PROJECT_DIR$/../OJ/leetcode/leetcode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/codingInterviews/codingInterviews.iml" filepath="$PROJECT_DIR$/codingInterviews/codingInterviews.iml" />
+      <module fileurl="file://$PROJECT_DIR$/leetcode/leetcode.iml" filepath="$PROJECT_DIR$/leetcode/leetcode.iml" />
     </modules>
   </component>
 </project>
