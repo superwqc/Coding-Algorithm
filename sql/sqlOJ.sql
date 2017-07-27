@@ -381,3 +381,70 @@ PRIMARY KEY (`emp_no`,`from_date`));
 select max(salary)-min(salary) as growth
 from salaries 
 where emp_no =10001;
+
+
+21.查找所有员工自入职以来的薪水涨幅情况，给出员工编号emp_noy以及其对应的薪水涨幅growth，并按照growth进行升序
+CREATE TABLE `employees` (
+`emp_no` int(11) NOT NULL,
+`birth_date` date NOT NULL,
+`first_name` varchar(14) NOT NULL,
+`last_name` varchar(16) NOT NULL,
+`gender` char(1) NOT NULL,
+`hire_date` date NOT NULL,
+PRIMARY KEY (`emp_no`));
+CREATE TABLE `salaries` (
+`emp_no` int(11) NOT NULL,
+`salary` int(11) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`from_date`));
+
+select t1.emp_no, t1.salary - t2.salary as growth
+from 
+(select e.emp_no,s.salary from salaries s,employees e where e.emp_no=s.emp_no and s.to_date='9999-01-01' )as t1,
+(select e.emp_no,s.salary from salaries s,employees e where e.emp_no=s.emp_no and s.from_date=e.hire_date)as t2
+where t1.emp_no=t2.emp_no 
+order by growth;
+
+22.统计各个部门对应员工涨幅的次数总和，给出部门编码dept_no、部门名称dept_name以及次数sum
+CREATE TABLE `departments` (
+`dept_no` char(4) NOT NULL,
+`dept_name` varchar(40) NOT NULL,
+PRIMARY KEY (`dept_no`));
+CREATE TABLE `dept_emp` (
+`emp_no` int(11) NOT NULL,
+`dept_no` char(4) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`dept_no`));
+CREATE TABLE `salaries` (
+`emp_no` int(11) NOT NULL,
+`salary` int(11) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`from_date`));
+
+解法1：
+select d.dept_no,d.dept_name,count(salary)
+from departments d,dept_emp de ,salaries s
+where d.dept_no=de.dept_no
+and de.emp_no=s.emp_no
+group by d.dept_no;
+
+解法2：本题关键是要将 每个部门分组，并分别统计工资记录总数，思路如下：
+1、用INNER JOIN连接dept_emp表和salaries表，并以dept_emp.no分组，统计每个部门所有员工工资的记录总数
+2、再将上表用INNER JOIN连接departments表，限制条件为两表的dept_no相等，找到dept_no与dept_name的对应关系，最后依次输出dept_no、dept_name、sum
+
+SELECT de.dept_no, dp.dept_name, COUNT(s.salary) AS sum 
+FROM (dept_emp AS de INNER JOIN salaries AS s ON de.emp_no = s.emp_no) 
+INNER JOIN departments AS dp ON de.dept_no = dp.dept_no 
+GROUP BY de.dept_no
+
+
+23.对所有员工的当前(to_date='9999-01-01')薪水按照salary进行按照1-N的排名，相同salary并列且按照emp_no升序排列
+CREATE TABLE `salaries` (
+`emp_no` int(11) NOT NULL,
+`salary` int(11) NOT NULL,
+`from_date` date NOT NULL,
+`to_date` date NOT NULL,
+PRIMARY KEY (`emp_no`,`from_date`));
