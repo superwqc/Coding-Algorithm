@@ -1,2 +1,0 @@
-# Coding-Algorithm
-OJ、SQL
