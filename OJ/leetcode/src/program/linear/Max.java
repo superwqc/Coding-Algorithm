@@ -6,9 +6,6 @@ package program.linear;
 
 import java.util.Scanner;
 
-    /**
-     * Created by Riven on 2017/8/1.
-     */
     public class Max{
         static int N = 100;
         static int a[] = new int[N];
