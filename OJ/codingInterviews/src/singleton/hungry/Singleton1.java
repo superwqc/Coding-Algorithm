@@ -7,9 +7,9 @@ package singleton.hungry;
 public class Singleton1 {
 
     private static  Singleton1 singleton1=new Singleton1();
-
+    //私有构造
     private  Singleton1 (){}
-
+    //静态方法
     public static Singleton1 getInstance(){
         return singleton1;
     }
