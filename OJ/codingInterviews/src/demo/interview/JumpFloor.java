@@ -25,6 +25,7 @@ public class JumpFloor {
     }
 
     public static void main(String[] args) {
+
         System.out.println(jumpFloor(9));
     }
 }
